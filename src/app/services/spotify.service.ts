@@ -11,7 +11,7 @@ export class SpotifyService {
 
   getQuery(query:string){
     const url = `https://api.spotify.com/v1/${query}`;
-    const headers = new HttpHeaders({'Authorization':'Bearer BQAkKqKG-LRdbRX1uZLD-if0Akv_r8L4AMPYJbKAO90RgJI_adekeJvlJzwPnHU6Z8Ugu3xN2KYPg1JEJ6Y'})
+    const headers = new HttpHeaders({'Authorization':'Bearer BQDgLeCL4t9tb7JX3aXHBlcWdwHKWMvVjxT1k1RtzVkzm2noyhfQn7Vj3vn8xnjAzCiY0Y4zR2ksmk3-FG0'})
     return this.http.get(url,{headers});
   }
 
@@ -19,8 +19,16 @@ export class SpotifyService {
     return this.getQuery('browse/new-releases?limit=20').pipe(map(data => data['albums'].items));
   }
 
-  getArtista(termino:string){
+  getArtistas(termino:string){
     return this.getQuery(`search?q=${termino}&type=artist&limit=15`).pipe(map(data => data['artists'].items));
+  }
+
+  getArtista(id:string){
+    return this.getQuery(`artists/${id}`);
+  }
+
+  getTopTracks(id:string){
+    return this.getQuery(`artists/${id}/top-tracks?country=us`).pipe(map(data => data['tracks']));
   }
 }
 
