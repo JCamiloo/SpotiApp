@@ -8,12 +8,23 @@ import { Component } from '@angular/core';
 })
 export class SearchComponent {
 
-  artistas:any[] = []
+  artistas:any[] = [];
+  loading:boolean;
 
-  constructor(private spotify:SpotifyService) { }
+  constructor(private spotify:SpotifyService) {}
 
   buscar(termino:string) {
-    this.spotify.getArtista(termino).subscribe((data:any) => this.artistas = data);
+    if(termino.trim() === ''){
+      this.loading = false;
+      this.artistas = [];
+    }
+    else{
+      this.loading = true;
+      this.spotify.getArtista(termino).subscribe(data => {
+        this.artistas = data;
+        this.loading = false;
+      });
+    }
   }
 
 }
