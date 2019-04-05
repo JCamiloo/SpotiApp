@@ -20,11 +20,12 @@ export class SearchComponent {
     }
     else{
       this.loading = true;
-      this.spotify.getArtistas(termino).subscribe(data => {
-        this.artistas = data;
-        this.loading = false;
+      this.spotify.getToken().then(() => {
+        this.spotify.getArtistas(termino).subscribe(data => {
+          this.artistas = data;
+          this.loading = false;
+        });
       });
     }
   }
-
 }
